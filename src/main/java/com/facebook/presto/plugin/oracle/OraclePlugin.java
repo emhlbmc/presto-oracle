@@ -11,23 +11,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.prestosql.plugin.oracle;
+package com.facebook.presto.plugin.oracle;
 
-import com.google.inject.Binder;
-import com.google.inject.Module;
-import com.google.inject.Scopes;
-import io.prestosql.plugin.jdbc.BaseJdbcConfig;
-import io.prestosql.plugin.jdbc.JdbcClient;
+import com.facebook.presto.plugin.jdbc.JdbcPlugin;
 
-import static io.airlift.configuration.ConfigBinder.configBinder;
-
-public class OracleClientModule
-        implements Module
-{
-    @Override
-    public void configure(Binder binder)
-    {
-        binder.bind(JdbcClient.class).to(OracleClient.class).in(Scopes.SINGLETON);
-        configBinder(binder).bindConfig(BaseJdbcConfig.class);
+public class OraclePlugin
+        extends JdbcPlugin {
+    public OraclePlugin() {
+        super("oracle", new OracleClientModule());
     }
 }
